@@ -1,28 +1,27 @@
 name: CICD
 
 on:
-  push:
-    branches: [main,master]
-    
-jobs:
-  build:
-    runs-on: [ubuntu-latest]
-    steps:
-      - name: Checkout Source
-        uses: actions/checkout@v3
-      - name: Login To Docker Hub
-        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-      - name: Build Docker Image
-        run: docker build -t bkroland19:nodeapp .
-      - name: Push To Docker Hub
-        run: docker push bkroland19:nodeapp
+     push:
+          branches: [main, master]
 
-  deploy:
-    needs: build
-    runs-on: self-hosted
-    steps:
-      - name: Pull Image From Docker Hub
-        run: docker pull bkroland19:nodeapp
-      - name: Run Docker Container
-        run: docker run -d -p 4000:4000 bkroland19:nodeapp
-     
+jobs:
+     build:
+          runs-on: [ubuntu-latest]
+          steps:
+               - name: Checkout Source
+                 uses: actions/checkout@v3
+               - name: Login To Docker Hub
+                 run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+               - name: Build Docker Image
+                 run: docker build -t bkroland19/dash:nodeapp .
+               - name: Push To Docker Hub
+                 run: docker push bkroland19/dash:nodeapp
+
+     deploy:
+          needs: build
+          runs-on: self-hosted
+          steps:
+               - name: Pull Image From Docker Hub
+                 run: docker pull bkroland19/dash:nodeapp
+               - name: Run Docker Container
+                 run: docker run -d -p 4000:4000 bkroland19/dash:nodeapp
