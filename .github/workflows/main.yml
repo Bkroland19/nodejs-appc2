@@ -13,16 +13,16 @@ jobs:
       - name: Login To Docker Hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Build Docker Image
-        run: docker build -t nodeapp:v1 .
+        run: docker build -t bkroland19:nodeapp .
       - name: Push To Docker Hub
-        run: docker push nodeapp:v1
+        run: docker push bkroland19:nodeapp
 
   deploy:
     needs: build
     runs-on: self-hosted
     steps:
       - name: Pull Image From Docker Hub
-        run: docker pull nodeapp:v1
+        run: docker pull bkroland19:nodeapp
       - name: Run Docker Container
-        run: docker run -d -p 4000:4000 nodeapp:v1
+        run: docker run -d -p 4000:4000 bkroland19:nodeapp
      
