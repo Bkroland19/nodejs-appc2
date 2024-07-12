@@ -73,7 +73,11 @@ app.use("/graphql", graphqlHTTP({
 
 app.get("/rest/getAllUsers", (req, res) => {
     res.send(userData)
-   });
+});
+   
+app.get("/", (req, res) => {
+	res.send("server on");
+});
 
 app.listen(PORT, () => {
   console.log("Server running");
